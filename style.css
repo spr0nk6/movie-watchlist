@@ -44,7 +44,7 @@ header {
     gap: 0.5rem;
 }
 
-input, .search-btn {
+input, #search-btn {
     height: auto;
     background-color: var(--bg-tertiary);
     border: 1px solid var(--border);
@@ -52,12 +52,18 @@ input, .search-btn {
     color: var(--text-primary);
 }
 
-.search-btn {
+#search-btn {
     cursor: pointer;
     padding-inline: 20px;
 }
+#search-results {
+    height: 25rem;
+    border-bottom: 1px solid var(--border-strong);
+}
 
-#card-section{
+
+#watchlist-section{
+    margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     gap: 16px;

@@ -1,4 +1,28 @@
-const movieCardSection = document.getElementById("card-section")
+const apiKey = "http://www.omdbapi.com/?i=tt3896198&apikey=f90cd2f2"
+const movieCardSection = document.getElementById("watchlist-section")
+const searchField = document.getElementById("search-field")
+const searchBtn = document.getElementById("search-btn")
+const searchResults = document.getElementById("search-results")
+const searchForm = document.getElementById("search-form")
+
+searchForm.addEventListener("submit", function(event) {
+    event.preventDefault()
+    searchMovies()
+})
+
+async function searchMovies() {
+    try {
+        const response = await fetch(apiKey + "&s=" + searchField.value)
+        if (!response.ok) {
+            throw new Error(`response status: ${response.status}`)
+        }
+        const result = await response.json()
+        console.log(result)
+    }
+    catch (error) {
+        console.error(error.message)
+    }
+}
 
 const movieList = [
     {
