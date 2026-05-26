@@ -1,0 +1,128 @@
+:root {
+    --bg-primary: #0f1115;
+    --bg-secondary: #1a1d24;
+    --bg-tertiary: #252932;
+
+    --text-primary: #e8eaed;
+    --text-secondary: #9aa0a6;
+    --text-tertiary: #5f6368;
+
+    --border: #2d3139;
+    --border-strong: #3c4049;
+
+    --accent: #7c5cff;
+    --accent-hover: #9277ff;
+
+    --success: #4ade80;
+    --danger: #f87171;
+    --warning: #fbbf24;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+main {
+    padding: 20px 20px;
+}
+
+header {
+    border-bottom: 1px solid var(--border-strong);
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-section {
+    display: flex;
+    height: 1.5rem;
+    gap: 0.5rem;
+}
+
+input, .search-btn {
+    height: auto;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+}
+
+.search-btn {
+    cursor: pointer;
+    padding-inline: 20px;
+}
+
+#card-section{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    row-gap: 32px;
+}
+.card {
+    display: grid;
+    grid-template-rows: auto auto;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    min-width: 225px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.card-top {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    aspect-ratio: 2/3;
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+}
+.card-genre-watched {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+.watched-indicator {
+    background: var(--bg-tertiary);
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+.card-bottom {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    padding: 12px;
+    gap: 8px;
+}
+.card-year-rating {
+    display: flex;
+    justify-content: space-between;
+}
+.card-rating {
+    color: var(--warning);
+}
+.card-watched-delete {
+    display: flex;
+    gap: 4px;
+}
+.watched-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    flex: 1;
+    border-radius: 8px;
+    border: none;
+}
+.delete-btn {
+    background: var(--bg-tertiary);
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: none;
+}
