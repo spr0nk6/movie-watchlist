@@ -56,13 +56,8 @@ input, #search-btn {
     cursor: pointer;
     padding-inline: 20px;
 }
-#search-results {
-    height: 25rem;
-    border-bottom: 1px solid var(--border-strong);
-}
 
-
-#watchlist-section{
+#watchlist-section, #search-results {
     margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
@@ -75,6 +70,7 @@ input, #search-btn {
     overflow: hidden;
     background: var(--bg-secondary);
     min-width: 225px;
+    max-width: 225px;
     border-radius: 12px;
     border: 1px solid var(--border);
 }
@@ -86,26 +82,34 @@ input, #search-btn {
     aspect-ratio: 2/3;
     padding: 12px;
     border-bottom: 1px solid var(--border);
+    position: relative;
 }
-.card-genre-watched {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
+.movie-poster {
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    /*object-fit: cover;*/
+    position: absolute;
+}
+
+.movie-title {
+    font-weight: bold;
 }
 .watched-indicator {
     background: var(--bg-tertiary);
     padding: 4px 12px;
     border-radius: 12px;
+    font-size: 12px;
+    position: absolute;
 }
 .card-bottom {
     display: flex;
     flex-direction: column;
-    font-size: 12px;
     padding: 12px;
     gap: 8px;
 }
 .card-year-rating {
+    font-size: 12px;
     display: flex;
     justify-content: space-between;
 }

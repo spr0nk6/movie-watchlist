@@ -1,9 +1,11 @@
-const apiKey = "http://www.omdbapi.com/?i=tt3896198&apikey=f90cd2f2"
+const apiKey = "i=tt3896198&apikey=f90cd2f2"
+const apiSearchUrl = "http://www.omdbapi.com/?"
 const movieCardSection = document.getElementById("watchlist-section")
 const searchField = document.getElementById("search-field")
 const searchBtn = document.getElementById("search-btn")
-const searchResults = document.getElementById("search-results")
+const searchResultsSection = document.getElementById("search-results")
 const searchForm = document.getElementById("search-form")
+let searchResults = []
 
 searchForm.addEventListener("submit", function(event) {
     event.preventDefault()
@@ -12,61 +14,65 @@ searchForm.addEventListener("submit", function(event) {
 
 async function searchMovies() {
     try {
-        const response = await fetch(apiKey + "&s=" + searchField.value)
+        const response = await fetch(apiSearchUrl + apiKey + "&s=" + searchField.value)
         if (!response.ok) {
             throw new Error(`response status: ${response.status}`)
         }
-        const result = await response.json()
-        console.log(result)
+        const searchResult = await response.json()
+        searchResults = searchResult.Search
+        console.log(searchResults)
+        renderMovies(searchResults, searchResultsSection)
     }
     catch (error) {
         console.error(error.message)
     }
 }
 
+function renderSearchResults() {
+    renderMovies(searchResults, searchResultsSection)
+}
+
 const movieList = [
     {
-        title: "Midnight echoes",
-        genre: "Drama",
-        year: 2023
+        Title: "Midnight echoes",
+        Genre: "Drama",
+        Year: 2023
     },
     {
-        title: "Superbad",
-        genre: "Comedy",
-        year: 2012
+        Title: "Superbad",
+        Genre: "Comedy",
+        Year: 2012
     },
     {
-        title: "Heretic",
-        genre: "Horror",
-        year: 2020
+        Title: "Heretic",
+        Genre: "Horror",
+        Year: 2020
     },
     {
-        title: "Meet the Fockers",
-        genre: "Comedy",
-        year: 2006
+        Title: "Meet the Fockers",
+        Genre: "Comedy",
+        Year: 2006
     },
     {
-        title: "Apex",
-        genre: "Thriller",
-        year: 2026
+        Title: "Apex",
+        Genre: "Thriller",
+        Year: 2026
     }
 ]
 
-function renderMovies() {
+function renderMovies(arr, section) {
     let movieCards = ""
-    for (i = 0; i < movieList.length; i++) {
+    for (i = 0; i < arr.length; i++) {
         movieCards += `
             <div class="card">
                 <div class="card-top">
-                    <div class="card-genre-watched">
-                        <span>${movieList[i].genre}</span>
-                        <span class="watched-indicator">Watched</span>
-                    </div>
-                    <span>${movieList[i].title}</span>
+                    <img class="movie-poster" src="${arr[i].Poster}">
+                    <span class="watched-indicator">Watched</span>
                 </div>
                 <div class="card-bottom">
+                    <span class="movie-title">${arr[i].Title}</span>
                     <div class="card-year-rating">
-                        <span>${movieList[i].year}</span>
+                        <span>${arr[i].Year}</span>
                         <span class="card-rating">★★★★★</span>
                     </div>
                     <div class="card-watched-delete">
@@ -79,7 +85,7 @@ function renderMovies() {
             </div>
         `
     }
-    movieCardSection.innerHTML = movieCards
+    section.innerHTML = movieCards
 }
 
-renderMovies()
+renderMovies(movieList, movieCardSection)
