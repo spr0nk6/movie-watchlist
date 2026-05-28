@@ -120,12 +120,22 @@ input, #search-btn {
     display: flex;
     gap: 4px;
 }
+.watchlist-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    flex: 1;
+    border-radius: 8px;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+}
 .watched-btn {
     background: var(--bg-tertiary);
     color: var(--text-primary);
     flex: 1;
     border-radius: 8px;
     border: none;
+    cursor: pointer;
 }
 .delete-btn {
     background: var(--bg-tertiary);
@@ -135,4 +145,11 @@ input, #search-btn {
     align-items: center;
     border-radius: 8px;
     border: none;
+    cursor: pointer;
+}
+
+.movie-poster[src$="placeholder.svg"] {
+    width: 3rem;
+    position: relative;
+    align-self: center;
 }
