@@ -24,19 +24,26 @@ allContent.addEventListener("click", function(event) {
     if (deleteBtn) {
         const id = deleteBtn.dataset.movieId
         watchlist = watchlist.filter(movie => movie.imdbID !== id)
-        renderMovies(watchlist, watchlistSection, "watchlist")
+        localStorage.setItem("My watchlist", JSON.stringify(watchlist))
+        renderWatchlist()
+        searchMovies()
     }
     if (watchlistBtn) {
         const id = watchlistBtn.dataset.movieId
         const addedMovie = searchResults.find(movie => movie.imdbID === id)
-        watchlist.push(addedMovie)
+        watchlist.unshift(addedMovie)
+        // console.log(addedMovie)
+        localStorage.setItem("My watchlist", JSON.stringify(watchlist))
         searchResults = searchResults.filter(movie => movie.imdbID !== id)
-        renderMovies(watchlist, watchlistSection, "watchlist")
+        renderWatchlist()
         renderMovies(searchResults, searchResultsSection, "search")
     }
 })
 
-
+function renderWatchlist() {
+    watchlist = JSON.parse(localStorage.getItem("My watchlist"))
+    renderMovies(watchlist, watchlistSection, "watchlist")
+}
 
 async function searchMovies() {
     try {
@@ -89,4 +96,4 @@ function renderMovies(arr, section, type) {
     section.innerHTML = movieCards
 }
 
-renderMovies(watchlist, watchlistSection, "watchlist")
+renderWatchlist()
