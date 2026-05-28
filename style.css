@@ -95,6 +95,9 @@ input, #search-btn {
 .movie-title {
     font-weight: bold;
 }
+.movie-type{
+    text-transform: capitalize;
+}
 .watched-indicator {
     background: var(--bg-tertiary);
     padding: 4px 12px;
@@ -112,9 +115,17 @@ input, #search-btn {
     font-size: 12px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
-.card-rating {
+.rating-btn {
     color: var(--warning);
+    font-size: 14px;
+}
+.rating-star {
+    cursor: pointer;
+}
+.empty-star {
+    color: var(--text-tertiary);
 }
 .card-watched-delete {
     display: flex;
