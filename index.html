@@ -13,16 +13,34 @@
     <header>
         <form id="search-form">
             <search class="search-section">
-                <input id="search-field">
+                <div class="input-clear">
+                    <input id="search-field">
+                    <svg class="clear-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 8L16 16" stroke="var(--text-tertiary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M16 8L8 16" stroke="var(--text-tertiary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                </div>
                 <button id="search-btn">Search</button>
             </search>
         </form>
     </header>
     <main>
         <div id="search-results">
-
         </div>
-        <h1>Your watchlist</h1>
+        <div class="watchlist-title-sorting">
+            <h1>Your watchlist</h1>
+            <div>
+                <span>Sort by</span>
+                <select class="sorting-btn" name="filter" id="watchlist-filter">
+                    <option value="recent">Recently added</option>
+                    <option value="rating">Rating</option>
+                    <option value="year">Year</option>
+                    <option value="title">Title</option>
+                </select>
+            </div>
+        </div>
+        <div class="watchlist-tabs">
+            <button class="tab-btn tab-btn-active">All</button>
+            <button class="tab-btn">Watched</button>
+            <button class="tab-btn">Not watched</button>
+        </div>
         <div id="watchlist-section">
         </div>
     </main>
