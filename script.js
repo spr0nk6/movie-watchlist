@@ -1,10 +1,11 @@
 const apiKey = "i=tt3896198&apikey=f90cd2f2"
 const apiSearchUrl = "http://www.omdbapi.com/?"
 const watchlistSection = document.getElementById("watchlist-section")
-const searchField = document.getElementById("search-field")
+let searchField = document.getElementById("search-field")
 const searchBtn = document.getElementById("search-btn")
 const searchResultsSection = document.getElementById("search-results")
 const searchForm = document.getElementById("search-form")
+const clearBtn = document.getElementById("clear-btn")
 const allContent = document.querySelector("main")
 let searchResults = []
 let watchlist = []
@@ -12,6 +13,11 @@ let watchlist = []
 searchForm.addEventListener("submit", function(event) {
     event.preventDefault()
     searchMovies()
+})
+clearBtn.addEventListener("click", function() {
+    searchField.value = ""
+    searchResults = []
+    renderMovies(searchResults, searchResultsSection, "search")
 })
 
 allContent.addEventListener("click", function(event) {

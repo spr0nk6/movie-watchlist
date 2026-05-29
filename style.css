@@ -27,7 +27,7 @@ body {
 }
 
 main {
-    padding: 20px 20px;
+    padding: 0px 20px;
 }
 
 header {
@@ -64,7 +64,7 @@ input, #search-btn {
     position: relative;
     cursor: pointer;
 }
-.clear-button {
+#clear-btn {
     position: absolute;
     top: 50%; transform: translateY(-50%);
     right: 4px;
@@ -233,7 +233,5 @@ input, #search-btn {
 .movie-poster[src$="placeholder.svg"] {
     display: flex;
     width: 3rem;
-    position: relative;
-    align-self: center;
     margin: auto;
 }
