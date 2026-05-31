@@ -6,18 +6,49 @@ const searchBtn = document.getElementById("search-btn")
 const searchResultsSection = document.getElementById("search-results")
 const searchForm = document.getElementById("search-form")
 const clearBtn = document.getElementById("clear-btn")
+const watchlistFilter = document.getElementById("watchlist-filter")
 const allContent = document.querySelector("main")
 let searchResults = []
 let watchlist = []
+let currentSort = ""
 
 searchForm.addEventListener("submit", function(event) {
     event.preventDefault()
     searchMovies()
 })
+searchField.addEventListener("input", function(event) {
+    if (searchField.value !== "") {
+        clearBtn.classList.remove("invisible")
+    } else {
+        clearBtn.classList.add("invisible")
+    }
+})
+clearBtn.addEventListener("click", function() {
+    clearBtn.classList.add("invisible")
+})
 clearBtn.addEventListener("click", function() {
     searchField.value = ""
     searchResults = []
     renderMovies(searchResults, searchResultsSection, "search")
+})
+
+watchlistFilter.addEventListener("change", function() {
+    if (watchlistFilter.value === "title") {
+        currentSort = watchlistFilter.value
+        renderMovies(watchlist, watchlistSection, "watchlist")
+    }
+    if (watchlistFilter.value === "rating") {
+        currentSort = watchlistFilter.value
+        renderMovies(watchlist, watchlistSection, "watchlist")
+    }
+    if (watchlistFilter.value === "year") {
+        currentSort = watchlistFilter.value
+        renderMovies(watchlist, watchlistSection, "watchlist")
+    }
+    if (watchlistFilter.value === "recent") {
+        currentSort = watchlistFilter.value
+        renderMovies(watchlist, watchlistSection, "watchlist")
+    }
 })
 
 allContent.addEventListener("click", function(event) {
@@ -30,13 +61,13 @@ allContent.addEventListener("click", function(event) {
         const addedMovie = watchlist.find(movie => movie.imdbID === id)
         addedMovie.isWatched === true ? addedMovie.isWatched = false : addedMovie.isWatched = true
         localStorage.setItem("My watchlist", JSON.stringify(watchlist))
-        renderWatchlist()
+        renderMovies(watchlist, watchlistSection, "watchlist")
     }
     if (deleteBtn) {
         const id = deleteBtn.dataset.movieId
         watchlist = watchlist.filter(movie => movie.imdbID !== id)
         localStorage.setItem("My watchlist", JSON.stringify(watchlist))
-        renderWatchlist()
+        renderMovies(watchlist, watchlistSection, "watchlist")
         searchMovies()
     }
     if (watchlistBtn) {
@@ -46,7 +77,7 @@ allContent.addEventListener("click", function(event) {
         addedMovie.isWatched = false
         localStorage.setItem("My watchlist", JSON.stringify(watchlist))
         searchResults = searchResults.filter(movie => movie.imdbID !== id)
-        renderWatchlist()
+        renderMovies(watchlist, watchlistSection, "watchlist")
         renderMovies(searchResults, searchResultsSection, "search")
     }
     if (ratingBtn) {
@@ -55,7 +86,7 @@ allContent.addEventListener("click", function(event) {
         const addedMovie = watchlist.find(movie => movie.imdbID === id)
         addedMovie.rating === starPos ? addedMovie.rating = 0 : addedMovie.rating = starPos
         localStorage.setItem("My watchlist", JSON.stringify(watchlist))
-        renderWatchlist()
+        renderMovies(watchlist, watchlistSection, "watchlist")
     }
 })
 
@@ -97,37 +128,53 @@ async function searchMovies() {
 }
 
 function renderMovies(arr, section, type) {
+    let arrToRender = arr
+    if (type === "watchlist") {
+        arrToRender = [...arr]
+        if (currentSort === "title") {
+            arrToRender = arrToRender.sort((a, b) => a.Title.localeCompare(b.Title))
+        }
+        else if (currentSort === "rating") {
+            arrToRender = arrToRender.filter(movie => movie.isWatched === true)
+            arrToRender = arrToRender.filter(movie => movie.rating > 0)
+            arrToRender = arrToRender.sort((a,b) => a.rating - b.rating)
+        }
+        else if (currentSort === "year") {
+            arrToRender = arrToRender.sort((a ,b) => parseInt(b.Year) - parseInt(a.Year))
+        }
+    }
+
     let movieCards = ""
-    for (i = 0; i < arr.length; i++) {
+    for (i = 0; i < arrToRender.length; i++) {
         movieCards += `
             <div class="card">
                 <div class="card-top">
                     <img class="movie-poster" 
-                        src="${arr[i].Poster !== "N/A" ? arr[i].Poster : "placeholder.svg"}"
+                        src="${arrToRender[i].Poster !== "N/A" ? arrToRender[i].Poster : "placeholder.svg"}"
                         onerror="this.src='placeholder.svg'">
-                    ${arr[i].isWatched ? `<span class="watched-indicator">Watched</span>` : ""}
+                    ${arrToRender[i].isWatched ? `<span class="watched-indicator">Watched</span>` : ""}
                 </div>
                 <div class="card-bottom">
-                    <span class="movie-title">${arr[i].Title}</span>
+                    <span class="movie-title">${arrToRender[i].Title}</span>
                     <div class="card-year-rating">
                         <div>
-                            <span>${arr[i].Year}</span>
-                            <span class="movie-type">· ${arr[i].Type}</span>
+                            <span>${arrToRender[i].Year}</span>
+                            <span class="movie-type">· ${arrToRender[i].Type}</span>
                         </div>
-                        ${arr[i].isWatched 
+                        ${arrToRender[i].isWatched 
                             ?  `<div class="rating-btn">
-                                    ${moviesRating(arr[i].rating, arr[i].imdbID)}
+                                    ${moviesRating(arrToRender[i].rating, arrToRender[i].imdbID)}
                                 </div>` 
                             : ""}
                     </div>
                     ${type === "watchlist"
                     ?   `<div class="card-watched-delete">
-                            <button class="watched-btn" data-movie-id="${arr[i].imdbID}">${arr[i].isWatched === true ? `Unmark` : `Mark as watched`}</button>
-                            <button class="delete-btn" data-movie-id="${arr[i].imdbID}">
+                            <button class="watched-btn" data-movie-id="${arrToRender[i].imdbID}">${arrToRender[i].isWatched === true ? `Unmark` : `Mark as watched`}</button>
+                            <button class="delete-btn" data-movie-id="${arrToRender[i].imdbID}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" fill="var(--text-primary)" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M232.7 69.9C237.1 56.8 249.3 48 263.1 48L377 48C390.8 48 403 56.8 407.4 69.9L416 96L512 96C529.7 96 544 110.3 544 128C544 145.7 529.7 160 512 160L128 160C110.3 160 96 145.7 96 128C96 110.3 110.3 96 128 96L224 96L232.7 69.9zM128 208L512 208L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 208zM216 272C202.7 272 192 282.7 192 296L192 488C192 501.3 202.7 512 216 512C229.3 512 240 501.3 240 488L240 296C240 282.7 229.3 272 216 272zM320 272C306.7 272 296 282.7 296 296L296 488C296 501.3 306.7 512 320 512C333.3 512 344 501.3 344 488L344 296C344 282.7 333.3 272 320 272zM424 272C410.7 272 400 282.7 400 296L400 488C400 501.3 410.7 512 424 512C437.3 512 448 501.3 448 488L448 296C448 282.7 437.3 272 424 272z"/></svg>
                             </button>
                         </div>`
-                    :   `<button class="watchlist-btn" data-movie-id="${arr[i].imdbID}">Add to watchlist</button>`
+                    :   `<button class="watchlist-btn" data-movie-id="${arrToRender[i].imdbID}">Add to watchlist</button>`
                     }
                 </div>
             </div>

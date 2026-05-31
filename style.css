@@ -235,3 +235,7 @@ input, #search-btn {
     width: 3rem;
     margin: auto;
 }
+
+.invisible {
+    display: none;
+}
